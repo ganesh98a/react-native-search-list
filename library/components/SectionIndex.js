@@ -5,12 +5,13 @@ import {
   View,
   Text,
   StyleSheet,
+  Platform,
   Animated
 } from 'react-native'
 import PropTypes from 'prop-types'
 
 let returnTrue = () => true
-const itemHeight = 20
+const itemHeight = Platform.isPad ? 30 : 20
 
 export default class SectionIndex extends Component {
   static propTypes = {
@@ -108,7 +109,7 @@ let styles = StyleSheet.create({
 
   item: {
     padding: 0,
-    height: itemHeight
+    height: Platform.isPad ? 30 : 20
   },
 
   text: {

@@ -29,15 +29,15 @@ export default {
 
     toolbarHeight: 44,
     headerHeight: 44 + statusBarHeight,
-    searchInputHeight: 44,
+    searchInputHeight: Platform.isPad ? 70 : 44,
 
     windowWidth: Dimensions.get('window').width,
     windowHeight: Dimensions.get('window').height,
 
     statusBarHeight,
 
-    searchIconWidth: 30,
-    cancelButtonWidth: 70, // width for the cancel button area, should be a fix value at this moment
+    searchIconWidth: Platform.isPad ? 50 : 30,
+    cancelButtonWidth: Platform.isPad ? 100 : 70, // width for the cancel button area, should be a fix value at this moment
     searchBarHorizontalPadding: 8 // padding between the search input and the search bar
   },
   duration: {

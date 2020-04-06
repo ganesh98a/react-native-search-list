@@ -203,7 +203,7 @@ export default class SearchList extends Component {
             justifyContent: 'center',
             height: this.props.sectionHeaderHeight
           }}>
-            <Text style={styles.sectionTitle}>{sectionID}</Text>
+            <Text style={[ styles.sectionTitle, {fontSize: Platform.isPad ? 30 : 18} ]}>{sectionID}</Text>
           </View>
         </View>
       )
@@ -219,7 +219,7 @@ export default class SearchList extends Component {
    */
   _renderSectionIndexItem (sectionData, sectionID) {
     return (
-      <Text style={{textAlign: 'center', color: this.props.sectionIndexTextColor, fontSize: 14, height: 20}}>
+      <Text style={{textAlign: 'center', color: this.props.sectionIndexTextColor, fontSize: Platform.isPad ? 22 : 14, height: Platform.isPad ? 30 : 20}}>
         {sectionID}
       </Text>
     )
@@ -241,7 +241,7 @@ export default class SearchList extends Component {
       <View key={'SEP_' + sectionID + '_' + rowID} style={style}>
         <View style={{
           height: 1 / PixelRatio.get(),
-          backgroundColor: '#fafafa'
+          backgroundColor: '#efefef'
         }} />
       </View>
     )
@@ -355,22 +355,17 @@ export default class SearchList extends Component {
         ref='view'
         style={[{
           // 考虑上动画以后页面要向上移动，这里必须拉长
-          height: Theme.size.windowHeight + Theme.size.toolbarHeight,
-          width: Theme.size.windowWidth,
-          transform: [
-            {
-              translateY: this.state.animatedValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, -Theme.size.toolbarHeight]
-              })
-            }
-          ]
+          // height: Theme.size.windowHeight + Theme.size.toolbarHeight,
+          height: '100%',
+          width: '100%',
+          flex: 1
+          
         }, this.props.style]}>
         <View style={[{
           flex: 1,
           backgroundColor: this.props.searchListBackgroundColor
         }]}>
-          <Toolbar
+         { /*<Toolbar
             animatedValue={this.state.animatedValue}
 
             style={[{
@@ -384,8 +379,8 @@ export default class SearchList extends Component {
             textColor={this.props.titleTextColor}
             renderBackButton={this.props.renderBackButton || this._renderBackButton.bind(this)}
             renderRightButton={this.props.renderRightButton}
-          />
-
+          />*/
+        }
           <SearchBar
             placeholder={this.props.searchInputPlaceholder ? this.props.searchInputPlaceholder : ''}
 
@@ -566,7 +561,7 @@ const styles = StyleSheet.create({
     height: Theme.size.sectionHeaderHeight,
     justifyContent: 'center',
     paddingLeft: 25,
-    backgroundColor: '#fafafa'
+    backgroundColor: '#efefef'
   },
   sectionTitle: {
     color: '#979797',

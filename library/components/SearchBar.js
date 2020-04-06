@@ -9,7 +9,9 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Animated,
-  StyleSheet
+  StyleSheet,
+  Platform,
+  Alert
 } from 'react-native'
 import React, { Component } from 'react'
 
@@ -120,23 +122,23 @@ export default class SearchBar extends Component {
           }
         ]}>
         <Animated.View style={{
-          width: this.state.animatedValue.interpolate({
+          width: this.props.isSearching ? this.state.animatedValue.interpolate({
             inputRange: [0, buttonWidth],
             // TODO 这里要想办法做得更灵活一点
             outputRange: [Theme.size.windowWidth - searchBarHorizontalPadding * 2, Theme.size.windowWidth - buttonWidth - searchBarHorizontalPadding]
-          }),
+          }) : Platform.isPad ? '91%' : '84%',
           backgroundColor: this.state.animatedValue.interpolate({
             inputRange: [0, buttonWidth],
             outputRange: [this.props.searchInputBackgroundColor, this.props.searchInputBackgroundColorActive]
           }),
-          height: 28,
+          height: Platform.isPad ? 50 : 28,
           borderRadius: 5
         }}>
           <TextInput
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
             ref='input'
-            style={[styles.searchTextInputStyle, {
+            style={[ Platform.isPad ? iPadstyles.searchTextInputStyle : styles.searchTextInputStyle, {
               color: this.props.searchInputTextColorActive && !this.state.isShowHolder
                 ? this.props.searchInputTextColorActive
                 : this.props.searchInputTextColor || '#979797'
@@ -158,7 +160,7 @@ export default class SearchBar extends Component {
               }
             ]}>
             <Image
-              style={styles.searchIconStyle}
+              style={Platform.isPad ? iPadstyles.searchIconStyle : styles.searchIconStyle}
               source={require('../images/icon-search.png')} />
           </Animated.View>
 
@@ -171,12 +173,12 @@ export default class SearchBar extends Component {
               })
             }]}>
             <Image
-              style={styles.searchIconStyle}
+              style={Platform.isPad ? iPadstyles.searchIconStyle : styles.searchIconStyle}
               source={require('../images/icon-search.png')} />
             <Text style={{
               marginLeft: 5,
               color: this.props.searchInputPlaceholderColor,
-              fontSize: 14,
+              fontSize: Platform.isPad ? 28 : 14,
               backgroundColor: 'rgba(0, 0, 0, 0)'
             }}>{this.props.placeholder}</Text>
           </Animated.View>
@@ -200,7 +202,7 @@ export default class SearchBar extends Component {
               renderToHardwareTextureAndroid
             >
               <Text
-                style={{color: this.props.cancelTextColor}}
+                style={{color: this.props.cancelTextColor, fontSize: Platform.isPad ? 25 : 18}}
                 numberOfLines={1}>{this.props.cancelTitle}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -209,6 +211,23 @@ export default class SearchBar extends Component {
     )
   };
 }
+
+const iPadstyles = StyleSheet.create({
+  searchTextInputStyle: {
+    flex: 1,
+    minHeight: 50,
+    padding: 0,
+    paddingLeft: searchIconWidth,
+    paddingRight: 8,
+    borderRadius: 5,
+    fontSize: 25,
+    // borderWidth: 1
+  },
+  searchIconStyle: {
+    width: 24,
+    height: 24
+  }
+});
 
 const styles = StyleSheet.create({
   searchTextInputStyle: {
