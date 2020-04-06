@@ -6,12 +6,12 @@ import {
   View,
   Text,
   StyleSheet,
-  ListView,
   PixelRatio,
   Animated,
   Image,
   Platform
 } from 'react-native'
+import ListView from 'deprecated-react-native-listview'
 
 import React, { Component } from 'react'
 
